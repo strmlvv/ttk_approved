@@ -24,3 +24,4 @@ export function PublicFooter({ mapSlug = 'central', mapHref }: PublicFooterProps
     </footer>
   );
 }
+
