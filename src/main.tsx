@@ -10,21 +10,24 @@ import { OrganizerLoginPage } from './pages/OrganizerLoginPage';
 import { isOrganizerAuthenticated } from './auth/frontendAuth';
 import { OrganizerGate } from './auth/OrganizerGate';
 import { isSupabaseEnabledFromEnv } from './api/client';
+import { appPath, getAppPathname, restoreGithubPagesRoute } from './lib/routing';
 import './api/bootstrap';
 
+restoreGithubPagesRoute();
+
 function App() {
-  const path = window.location.pathname;
+  const path = getAppPathname();
   const editorMatch = path.match(/^\/app\/maps\/([^/]+)/);
   const viewerMatch = path.match(/^\/(m|embed)\/([^/]+)/);
 
   if (path === '/organizer/login' || path === '/login') return <OrganizerLoginPage />;
   if (path === '/app' || path === '/app/') {
     if (!isOrganizerAuthenticated() && !isSupabaseEnabledFromEnv()) return <OrganizerLoginPage />;
-    return <OrganizerGate onUnauthorized={() => window.location.replace('/organizer/login')}><MyMapsPage /></OrganizerGate>;
+    return <OrganizerGate onUnauthorized={() => window.location.replace(appPath('/organizer/login'))}><MyMapsPage /></OrganizerGate>;
   }
   if (editorMatch) {
     if (!isOrganizerAuthenticated() && !isSupabaseEnabledFromEnv()) return <OrganizerLoginPage />;
-    return <OrganizerGate onUnauthorized={() => window.location.replace('/organizer/login')}><EditorPage id={editorMatch[1]} /></OrganizerGate>;
+    return <OrganizerGate onUnauthorized={() => window.location.replace(appPath('/organizer/login'))}><EditorPage id={editorMatch[1]} /></OrganizerGate>;
   }
   if (path === '/' || path === '') return <PublicHomePage />;
   if (viewerMatch?.[1] === 'embed') return <EmbedPage slug={viewerMatch[2]} />;
