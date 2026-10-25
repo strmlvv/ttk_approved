@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting…</title>
+    <script>
+      (function () {
+        var base = '/ttk_approved';
+        var path = window.location.pathname.indexOf(base + '/') === 0
+          ? window.location.pathname.slice(base.length)
+          : window.location.pathname;
+        var query = window.location.search.slice(1);
+        var hash = window.location.hash;
+        var route = path + (query ? '?' + query : '') + hash;
+        var target = base + '/?__ghpages_route=' + encodeURIComponent(route);
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Открываем страницу…</p>
+  </body>
+</html>
