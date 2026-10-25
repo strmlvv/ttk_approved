@@ -1,0 +1,3 @@
+import type { PoiCategory } from '../lib/api';
+export const categoryLabels: Record<PoiCategory, string> = { entrance: 'Вход', food: 'Кафе', service: 'Сервис', shop: 'Магазин', toilet: 'Туалет', conference: 'Конференц-зал', meeting: 'Переговорная', exhibition: 'Выставочная зона', cloakroom: 'Гардероб', rest: 'Зона отдыха', reception: 'Ресепшен', stairs: 'Лестница', wifi: 'Wi-Fi' };
+export const categoryIcons: Record<PoiCategory, string> = { entrance: '↑', food: '🍴', service: 'i', shop: '▣', toilet: '♟', conference: '♣', meeting: '▣', exhibition: '▧', cloakroom: '⌁', rest: '⌂', reception: '♙', stairs: '≋', wifi: '⌁' };
