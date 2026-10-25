@@ -1,3 +1,0 @@
-export const normalizeYaw = (yaw: number) => ((yaw + 180) % 360 + 360) % 360 - 180;
-export const visibleYawDelta = (targetYaw: number, viewerYaw: number) => normalizeYaw(targetYaw - viewerYaw);
-export const projectHotspot = (yaw: number, pitch: number, viewerYaw: number, viewerPitch: number, fov = 95) => { const deltaYaw = visibleYawDelta(yaw, viewerYaw); const deltaPitch = pitch - viewerPitch; const visible = Math.abs(deltaYaw) < fov * .64 && Math.abs(deltaPitch) < 56; return { visible, left: 50 + (deltaYaw / fov) * 76, top: 52 - deltaPitch * 1.05, scale: Math.max(.7, 1 - Math.abs(deltaYaw) / 220) }; };
