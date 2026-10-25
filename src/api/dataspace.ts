@@ -1,0 +1,6 @@
+export type DataSpaceClient = { endpoint: string; token?: string };
+let dataSpaceClient: DataSpaceClient | null = null;
+export function configureDataSpaceClient(client: DataSpaceClient) { dataSpaceClient = { ...client, endpoint: client.endpoint.replace(/\/$/, '') }; }
+export function getDataSpaceClient() { return dataSpaceClient; }
+export const isDataSpaceConfigured = () => dataSpaceClient !== null;
+export async function dataSpaceRequest<T>(query: string, variables?: Record<string, unknown>): Promise<T> { if (!dataSpaceClient) throw new Error('DataSpace endpoint не настроен'); const response = await fetch(dataSpaceClient.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(dataSpaceClient.token ? { Authorization: `Bearer ${dataSpaceClient.token}` } : {}) }, body: JSON.stringify({ query, variables }) }); if (!response.ok) throw new Error(`DataSpace ответил HTTP ${response.status}`); const payload = await response.json() as { data?: T; errors?: Array<{ message?: string }> }; if (payload.errors?.length) throw new Error(payload.errors.map((error) => error.message || 'GraphQL ошибка').join('; ')); if (!payload.data) throw new Error('DataSpace вернул пустой ответ'); return payload.data; }
